@@ -1,0 +1,252 @@
+/* Universal Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-family: 'Roboto', sans-serif;
+  color: #F1F1F1; /* Light White */
+  background: #1B262C url('wings.png') no-repeat center center fixed; /* Background Image */
+  background-size: cover; /* Cover entire screen */
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Centering Auth Buttons */
+.auth-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height to center vertically */
+}
+
+.auth-buttons button {
+  background: #BBE1FA; /* Soft Light Blue */
+  color: #1B262C; /* Dark Grayish Blue */
+  border: none;
+  padding: 12px 25px;
+  margin: 0 10px;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.auth-buttons button:hover {
+  background: #3282B8; /* Medium Blue */
+  color: #F1F1F1;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Header Styling */
+header {
+  background: rgba(15, 76, 117, 0.9); /* Dark Blue with opacity */
+  color: #BBE1FA; /* Soft Light Blue */
+  text-align: center;
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  z-index: 100;
+}
+
+header h1 {
+  font-size: 2.8em;
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 1.5px;
+  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+nav {
+  margin-top: 15px;
+}
+
+nav button {
+  background: #BBE1FA; /* Soft Light Blue */
+  color: #1B262C; /* Dark Grayish Blue */
+  border: none;
+  padding: 12px 20px;
+  margin: 0 10px;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+nav button:hover {
+  background: #3282B8; /* Medium Blue */
+  transform: scale(1.1);
+  color: #F1F1F1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Glassmorphism Section Styling */
+section {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+section:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+  font-size: 2.2em;
+  color: #BBE1FA; /* Soft Light Blue */
+  font-family: 'Oswald', sans-serif;
+  margin-bottom: 10px;
+  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+  text-transform: uppercase;
+  position: relative;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  width: 50px;
+  height: 3px;
+  background: #3282B8; /* Medium Blue */
+  left: 0;
+  bottom: -8px;
+}
+
+/* Inputs and Buttons */
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 2px solid rgba(187, 225, 250, 0.7); /* Soft Light Blue */
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #F1F1F1;
+  font-size: 1em;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #BBE1FA; /* Soft Light Blue */
+  background: rgba(255, 255, 255, 0.2);
+}
+
+button {
+  background: #0F4C75; /* Dark Blue */
+  color: #BBE1FA; /* Soft Light Blue */
+  border: none;
+  padding: 12px 25px;
+  cursor: pointer;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.1em;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+  background: #3282B8; /* Medium Blue */
+  color: #F1F1F1;
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Table Styling with Borders */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+th, td {
+  padding: 15px;
+  border: 1px solid rgba(187, 225, 250, 0.4); /* Light Blue Border */
+  color: #BBE1FA; /* Soft Light Blue Text */
+  text-align: left;
+}
+
+th {
+  background: #3282B8; /* Medium Blue for Header */
+  color: #1B262C; /* Dark Grayish Blue */
+  font-weight: bold;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2); /* Stronger Bottom Border */
+}
+
+td {
+  background: rgba(255, 255, 255, 0.05); /* Light Cell Background */
+}
+
+tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.1); /* Slightly Darker for Alternate Rows */
+}
+
+tr:hover td {
+  background: rgba(50, 130, 184, 0.15); /* Hover Light Blue Background */
+  color: #F1F1F1; /* Text Color Change on Hover */
+  border-color: #3282B8; /* Border Color on Hover */
+}
+
+/* Footer */
+footer {
+  background: rgba(15, 76, 117, 0.9); /* Dark Blue with opacity */
+  color: #BBE1FA; /* Soft Light Blue */
+  padding: 20px;
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: bold;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Keyframes for Section Fade-in */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+section {
+  opacity: 0;
+  animation: fadeInUp 1s forwards;
+}
+
+/* Add Fade-in Animation for First Load */
+body {
+  animation: fadeInBody 1s ease-in-out;
+}
+
+@keyframes fadeInBody {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
