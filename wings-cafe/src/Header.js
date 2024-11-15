@@ -1,23 +1,49 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 
 const Header = ({ currentUser, onLogout }) => {
-    const navigate = useNavigate(); // Initialize the useNavigate hook
+    const navigate = useNavigate();
+
+    // Automatically updates the document title whenever the current user changes
+    useEffect(() => {
+        if (currentUser) {
+            document.title = `Welcome, ${currentUser}`;
+        } else {
+            document.title = "Wings Cafe";
+        }
+    }, [currentUser]); // Re-run effect when currentUser changes
+
+    const handleLogout = () => {
+        onLogout();  // Ensure this function clears necessary data (e.g., token, user session)
+        navigate('/home');  // Redirect to the home page or login page after logging out
+    };
 
     return (
-        <header>
+        <header className="header">
             <h1>Welcome to Wings Cafe</h1>
-            {currentUser && <h2>Welcome, {currentUser}!</h2>}
             {currentUser ? (
-                <nav>
-                    <button onClick={() => navigate('/dashboard')}>Dashboard</button>
-                    <button onClick={() => navigate('/product-management')}>Product Management</button>
-                    <button onClick={() => navigate('/user-management')}>User Management</button>
-                    <button onClick={onLogout}>Logout</button>
-                </nav>
+                <>
+                    <h2>Welcome, {currentUser}!</h2>
+                    <nav>
+                        <button onClick={() => navigate('/dashboard')} aria-label="Go to Dashboard">
+                            Dashboard
+                        </button>
+                        <button onClick={() => navigate('/product-management')} aria-label="Manage Products">
+                            Product Management
+                        </button>
+                        <button onClick={() => navigate('/user-management')} aria-label="Manage Users">
+                            User Management
+                        </button>
+                        <button onClick={handleLogout} aria-label="Logout">
+                            Logout
+                        </button>
+                    </nav>
+                </>
             ) : (
-                <button onClick={() => navigate('/home')}>Login / Signup</button>
+                <button onClick={() => navigate('/home')} aria-label="Go to Login or Signup">
+                    Login / Signup
+                </button>
             )}
         </header>
     );

@@ -1,4 +1,3 @@
-// App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './Header';
@@ -12,21 +11,49 @@ import './App.css';
 const App = () => {
     const [currentUser, setCurrentUser] = useState(() => localStorage.getItem('currentUser') || null);
     const [isAuthenticated, setIsAuthenticated] = useState(!!currentUser);
-    const [users, setUsers] = useState(() => JSON.parse(localStorage.getItem('users')) || []);
-    const [products, setProducts] = useState(() => JSON.parse(localStorage.getItem('products')) || []);
+    const [users, setUsers] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [welcomeMessage, setWelcomeMessage] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const userResponse = await fetch('http://localhost:5000/api/users');
+                const userData = await userResponse.json();
+                setUsers(userData);
+
+                const productResponse = await fetch('http://localhost:5000/api/products');
+                const productData = await productResponse.json();
+                setProducts(productData);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        
+        fetchData();
+    }, []);
+
     const [loginError, setLoginError] = useState('');
     const [activeForm, setActiveForm] = useState(null);
 
     useEffect(() => {
-        // Sync currentUser and users with localStorage
+        // Sync currentUser and products with localStorage
         localStorage.setItem('currentUser', isAuthenticated ? currentUser : '');
         localStorage.setItem('users', JSON.stringify(users));
         localStorage.setItem('products', JSON.stringify(products));
+
+        // Update the welcome message whenever currentUser changes
+        if (currentUser) {
+            setWelcomeMessage(`Welcome, ${currentUser}!`);
+        } else {
+            setWelcomeMessage('');
+        }
     }, [currentUser, isAuthenticated, users, products]);
 
     const handleLogout = () => {
         setCurrentUser(null);
         setIsAuthenticated(false);
+        setWelcomeMessage('');  // Clear welcome message on logout
     };
 
     const handleSignup = (username, password) => {
@@ -35,22 +62,36 @@ const App = () => {
             return;
         }
         const newUser = { username, password };
-        setUsers(prevUsers => [...prevUsers, newUser]);
-        // After signing up, we do NOT log the user in automatically
-        setActiveForm('login'); // Redirect to login form after sign-up
-        setLoginError('');
+        fetch('http://localhost:5000/api/users', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newUser),
+        })
+            .then(response => response.json())
+            .then((data) => {
+                setLoginError(data.message);
+                setActiveForm('login'); // Redirect to login form after sign-up
+            });
     };
 
     const handleLogin = (username, password) => {
-        const foundUser = users.find(user => user.username === username && user.password === password);
-        if (foundUser) {
-            setCurrentUser(foundUser.username);
-            setIsAuthenticated(true);
-            setLoginError('');
-            setActiveForm(null);
-        } else {
-            setLoginError('Invalid credentials. Please try again.');
-        }
+        fetch('http://localhost:5000/api/users')
+            .then(response => response.json())
+            .then(data => {
+                const foundUser = data.find(user => user.username === username && user.password === password);
+                if (foundUser) {
+                    setCurrentUser(foundUser.username);
+                    setIsAuthenticated(true);
+                    setLoginError('');
+                    setActiveForm(null);
+                } else {
+                    setLoginError('Invalid credentials. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error("Error during login:", error);
+                setLoginError('An error occurred during login. Please try again.');
+            });
     };
 
     const handleAddProduct = (productData) => {
@@ -93,12 +134,14 @@ const App = () => {
     const handleSwitchUser = (username) => {
         setCurrentUser(username);
         setIsAuthenticated(true);
+        setWelcomeMessage(`Welcome, ${username}!`); // Set the welcome message
     };
 
     return (
         <Router>
             <div>
                 <Header currentUser={currentUser} onLogout={handleLogout} />
+                {welcomeMessage && <p className="welcome-message">{welcomeMessage}</p>} {/* Display welcome message */}
 
                 <Routes>
                     <Route path="/" element={<Navigate to="/home" />} />

@@ -1,0 +1,35 @@
+.dashboard-container {
+    position: relative;
+    padding: 20px;
+    border: 3px solid #ddd;
+    overflow: hidden;
+}
+
+.moving-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px; /* Adds space above the images */
+    padding: 10px;
+}
+
+.moving-image {
+    width: 120px; /* Adjust initial size */
+    height: 120px;
+    margin: 0 20px;
+    opacity: 0.8;
+    animation: moveScaleRotate 8s infinite alternate ease-in-out;
+}
+
+@keyframes moveScaleRotate {
+    0% { 
+        transform: translateX(0) scale(0.9) rotate(0deg); 
+    }
+    50% { 
+        transform: translateX(20px) scale(1.1) rotate(180deg); 
+    }
+    100% { 
+        transform: translateX(-20px) scale(1) rotate(360deg); 
+    }
+}
